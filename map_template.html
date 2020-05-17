@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Leaflet Example</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Load Leaflet: http://leafletjs.com/ -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="map"></div>
+
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
+
+    <script>
+
+        // Get map UUID, name, etc.
+        var scripts = document.getElementsByTagName("script");
+        path = scripts[scripts.length - 1]["baseURI"].split("/");
+        mapUUID = path[path.length - 2]
+        mapName = path[path.length - 1].split('.')[0]
+
+
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyA-RgflxwcBhkBdHG3CN7XuxSDZYiDypdA",
+            authDomain: "interactive-fantasy-map.firebaseapp.com",
+            databaseURL: "https://interactive-fantasy-map.firebaseio.com",
+            projectId: "interactive-fantasy-map",
+            storageBucket: "interactive-fantasy-map.appspot.com",
+            messagingSenderId: "669243645275",
+            appId: "1:669243645275:web:a13b66af209c5555cb4e7e",
+            measurementId: "G-82ZL4BKSWN"
+        };
+
+        // Initialize Firebase
+        var database = firebase.initializeApp(firebaseConfig);
+
+        function writePositionData(mapUUID, mapName, playerNum, x, y) {
+            firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + playerNum).set({
+                x: x,
+                y: y
+            });
+        }
+
+        // Create map
+        var map = L.map(
+            "map",
+            {
+                center: [0, 0],
+                crs: L.CRS.Simple,
+                zoom: 1,
+                zoomControl: true,
+                preferCanvas: false,
+            }
+        );
+
+        var tile_layer = L.tileLayer(
+            "tiles/{z}/{y}/{x}.jpg",
+            {
+                "attribution": "TO-DO",
+                "detectRetina": false, "maxNativeZoom": 5, "maxZoom": 5, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false
+            }
+        ).addTo(map);
+
+        var marker = L.marker(
+            [0, 0],
+            { draggable: true }
+        ).addTo(map);
+
+        marker.on("dragend", function (e) {
+            var chagedPos = e.target.getLatLng();
+            writePositionData(mapUUID, mapName, 0, chagedPos.lat, chagedPos.lng);
+        });
+
+        var custom_icon = L.icon({ "iconSize": [70, 70], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png" });
+        marker.setIcon(custom_icon);
+
+        // Listen for changes in firebase
+        firebase.database().ref('maps/test_map/players/0').on('value', function (snapshot) {
+            var val = snapshot.val();
+            marker.setLatLng([val.x, val.y]).update();
+        });
+
+    </script>
+
+</body>
+
+</html>

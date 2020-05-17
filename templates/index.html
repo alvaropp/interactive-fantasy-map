@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} Interactive map generator {% endblock %}
+
+{% block body %}
+
+<h1>Welcome!</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            {% block content %}
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.map_name.label }}<br>
+                    {{ form.map_name(size=32) }}
+                    {% for error in form.map_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.map_base_url.label }}<br>
+                    {{ form.map_base_url(size=32) }}
+                    {% for error in form.map_base_url.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.create() }}</p>
+            </form>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
