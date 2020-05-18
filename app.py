@@ -4,6 +4,7 @@ from process_new_map import process_form
 
 
 app = Flask(__name__)
+
 with open("secret.txt", "r") as secret_f:
     app.config["SECRET_KEY"] = secret_f.read()
 
@@ -15,6 +16,11 @@ def home():
         text = process_form(form)
         flash(text)
     return render_template("index.html", title="Create a new map", form=form)
+
+
+@app.route("/maps/<map_uuid>/<map_name>.html")
+def show_map(map_uuid, map_name):
+    return render_template(f"map_template.html", data=[map_uuid, map_name])
 
 
 if __name__ == "__main__":

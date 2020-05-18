@@ -8,8 +8,7 @@ from shutil import copyfile
 from firebase_db import connect_to_firebase_db, write_to_db
 
 
-MAPS_PATH = "./maps/"
-MAP_TEMPLATE_PATH = './map_template.html'
+MAPS_PATH = "./static/"
 
 
 def download_map_base_image(map_UUID, map_name, map_extension, map_url):
@@ -52,10 +51,7 @@ def process_form(form):
     db = connect_to_firebase_db()
     write_to_db(db, map_UUID, map_name)
 
-    # Copy map template to folder
-    copyfile(MAP_TEMPLATE_PATH, os.path.join("maps", map_UUID, map_name + ".html"))
-
     # Create map website
-    map_website_path = os.path.join('file:///Users/alvaroperez/Desktop/map-web-app/maps/', map_UUID, map_name + '.html')
+    map_website_path = os.path.join(map_UUID, map_name + '.html')
     map_website_path = "Your map file is: "+ map_website_path
     return map_website_path

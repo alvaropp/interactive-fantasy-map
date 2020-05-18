@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Leaflet Example</title>
+    <title>My Map (todo)</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +35,6 @@
 
     <div id="map"></div>
 
-
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
 
@@ -49,11 +48,8 @@
     <script>
 
         // Get map UUID, name, etc.
-        var scripts = document.getElementsByTagName("script");
-        path = scripts[scripts.length - 1]["baseURI"].split("/");
-        mapUUID = path[path.length - 2]
-        mapName = path[path.length - 1].split('.')[0]
-
+        var mapUUID = {{ data|tojson }}[0];
+        var mapName = {{ data|tojson }}[1];
 
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -90,7 +86,7 @@
         );
 
         var tile_layer = L.tileLayer(
-            "tiles/{z}/{y}/{x}.jpg",
+            "/static/" + mapUUID + "/tiles/{z}/{y}/{x}.jpg",
             {
                 "attribution": "TO-DO",
                 "detectRetina": false, "maxNativeZoom": 5, "maxZoom": 5, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false
