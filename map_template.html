@@ -111,7 +111,7 @@
         marker.setIcon(custom_icon);
 
         // Listen for changes in firebase
-        firebase.database().ref('maps/test_map/players/0').on('value', function (snapshot) {
+        firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
             var val = snapshot.val();
             marker.setLatLng([val.x, val.y]).update();
         });
