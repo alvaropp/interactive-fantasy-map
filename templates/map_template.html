@@ -90,22 +90,24 @@
             "/static/" + mapUUID + "/tiles/{z}/{y}/{x}.jpg",
             {
                 "attribution": "TO-DO",
-                "detectRetina": false, "maxNativeZoom": 5, "maxZoom": 5, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false
+                "detectRetina": false,
+                "maxNativeZoom": 5,
+                "maxZoom": 5,
+                "minZoom": 0,
+                "noWrap": false,
+                "opacity": 1,
+                "subdomains": "abc",
+                "tms": false
             }
         ).addTo(map);
 
-        // Load the characters from the database
-        const getPlayerInfo = async () => {
-            return firebase.database().ref('maps/' + mapUUID + "/" + mapName + "/players").once('value').then(result => {
-                return result.val();
-            });
-        }
+        var markerLayer = L.layerGroup().addTo(map);
 
-        function createMarkers(players) {
+        function createMarkers(playerInfo) {
             var markerArray = [];
-            for (let i = 0; i < players.length; i++) {
-                var player = players[i];
-                marker = new L.marker([0, 0], {
+            for (let i = 0; i < playerInfo.length; i++) {
+                var player = playerInfo[i];
+                marker = new L.marker([player["x"], player["y"]], {
                     draggable: true,
                     icon: L.icon({ "iconSize": [70, 70], "iconUrl": player["icon"] })
                 }).bindPopup(player["name"]);
@@ -120,22 +122,18 @@
 
         function placeMarkersInMap(markers) {
             for (var i = 0; i < markers.length; i++) {
-                map.addLayer(markers[i]);
+                //map.addLayer(markers[i]);
+                markerLayer.addLayer(markers[i]);
             }
         }
 
-        ; (async () => {
-            const playerInfo = await getPlayerInfo();
-            const markerArray = createMarkers(playerInfo)
+        // Listen for changes in firebase
+        firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players').on('value', function (snapshot) {
+            var playerInfo = snapshot.val();
+            markerLayer.clearLayers();
+            markerArray = createMarkers(playerInfo)
             placeMarkersInMap(markerArray);
-        })()
-
-
-        //// Listen for changes in firebase
-        //firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
-        //    var val = snapshot.val();
-        //    marker.setLatLng([val.x, val.y]).update();
-        //});
+        });
 
     </script>
 
