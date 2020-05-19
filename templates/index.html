@@ -26,6 +26,33 @@
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </p>
+
+
+
+
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>Name</td>
+                        <td>Icon URL</td>
+                    </tr>
+                    <tr>
+                        <td>Character 1</td>
+                        <td>{{ form.char_name_1(size=32) }}</td>
+                        <td>{{ form.char_icon_1(size=32) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Character 2</td>
+                        <td>{{ form.char_name_2(size=32) }}</td>
+                        <td>{{ form.char_icon_2(size=32) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Character 3</td>
+                        <td>{{ form.char_name_3(size=32) }}</td>
+                        <td>{{ form.char_icon_3(size=32) }}</td>
+                    </tr>
+                </table>
+
                 <p>{{ form.create() }}</p>
             </form>
             {% endblock %}
