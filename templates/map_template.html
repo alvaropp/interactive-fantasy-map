@@ -64,7 +64,7 @@
 
         // DB functions
         function writePositionData(mapUUID, mapName, playerNum, x, y) {
-            firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + playerNum).set({
+            firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + playerNum).update({
                 x: x,
                 y: y
             });
@@ -103,12 +103,16 @@
 
         function createMarkers(players) {
             var markerArray = [];
-            for (var i = 0; i < players.length; i++) {
+            for (let i = 0; i < players.length; i++) {
                 var player = players[i];
                 marker = new L.marker([0, 0], {
                     draggable: true,
                     icon: L.icon({ "iconSize": [70, 70], "iconUrl": player["icon"] })
                 }).bindPopup(player["name"]);
+                marker.on("dragend", function (e) {
+                    var chagedPos = e.target.getLatLng();
+                    writePositionData(mapUUID, mapName, i, chagedPos.lat, chagedPos.lng);
+                });
                 markerArray.push(marker);
             }
             return markerArray;
@@ -126,15 +130,6 @@
             placeMarkersInMap(markerArray);
         })()
 
-
-
-
-        //marker.on("dragend", function (e) {
-        //    var chagedPos = e.target.getLatLng();
-        //    writePositionData(mapUUID, mapName, 0, chagedPos.lat, chagedPos.lng);
-        //});
-        //var custom_icon = L.icon({ "iconSize": [70, 70], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png" });
-        //marker.setIcon(custom_icon);
 
         //// Listen for changes in firebase
         //firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
