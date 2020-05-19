@@ -47,11 +47,7 @@
 
     <script>
 
-        // Get map UUID, name, etc.
-        var mapUUID = {{ data|tojson }}[0];
-        var mapName = {{ data|tojson }}[1];
-
-        // Your web app's Firebase configuration
+        // Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyA-RgflxwcBhkBdHG3CN7XuxSDZYiDypdA",
             authDomain: "interactive-fantasy-map.firebaseapp.com",
@@ -66,12 +62,17 @@
         // Initialize Firebase
         var database = firebase.initializeApp(firebaseConfig);
 
+        // DB functions
         function writePositionData(mapUUID, mapName, playerNum, x, y) {
             firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + playerNum).set({
                 x: x,
                 y: y
             });
         }
+
+        // Get map UUID, name, etc.
+        var mapUUID = {{ data| tojson }}[0];
+        var mapName = {{ data| tojson }}[1];
 
         // Create map
         var map = L.map(
@@ -93,24 +94,61 @@
             }
         ).addTo(map);
 
-        var marker = L.marker(
-            [0, 0],
-            { draggable: true }
-        ).addTo(map);
+        // Load the characters from the database
+        const getPlayerInfo = async () => {
+            return firebase.database().ref('maps/' + mapUUID + "/" + mapName + "/players").once('value').then(result => {
+                return createMarkers(result.val());
+            });
+        }
 
-        marker.on("dragend", function (e) {
-            var chagedPos = e.target.getLatLng();
-            writePositionData(mapUUID, mapName, 0, chagedPos.lat, chagedPos.lng);
-        });
+        function createMarkers(players) {
+            var markerArray = [];
+            for (var i = 0; i < players.length; i++) {
+                var player = players[i];
+                marker = new L.marker([0, 0], {
+                    draggable: true,
+                    //icon: L.icon({ "iconSize": [70, 70], "iconUrl": player["icon"] })
+                }).bindPopup(player["name"]);
+                markerArray.push(marker);
+            }
+            return markerArray;
+        }
 
-        var custom_icon = L.icon({ "iconSize": [70, 70], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png" });
-        marker.setIcon(custom_icon);
+        function placeMarkersInMap(markers) {
+            console.log(markers)
+            for (var i = 0; i < markers.length; i++) {
+                console.log(markers[i]);
+                map.addLayer(markers[i]);
+            }
+            console.log("Finished...")
+        }
 
-        // Listen for changes in firebase
-        firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
-            var val = snapshot.val();
-            marker.setLatLng([val.x, val.y]).update();
-        });
+        ; (async () => {
+            const playerInfo = await getPlayerInfo();
+            const markerArray = createMarkers(playerInfo)
+            console.log(markerArray);
+            console.log("Placing markers in map...")
+            placeMarkersInMap(markerArray);
+        })()
+
+
+
+
+
+
+        //marker.on("dragend", function (e) {
+        //    var chagedPos = e.target.getLatLng();
+        //    writePositionData(mapUUID, mapName, 0, chagedPos.lat, chagedPos.lng);
+        //});
+        //var custom_icon = L.icon({ "iconSize": [70, 70], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png" });
+        //marker.setIcon(custom_icon);
+        ////
+//
+        //// Listen for changes in firebase
+        //firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
+        //    var val = snapshot.val();
+        //    marker.setLatLng([val.x, val.y]).update();
+        //});
 
     </script>
 
