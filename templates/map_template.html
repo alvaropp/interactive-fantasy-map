@@ -97,7 +97,7 @@
         // Load the characters from the database
         const getPlayerInfo = async () => {
             return firebase.database().ref('maps/' + mapUUID + "/" + mapName + "/players").once('value').then(result => {
-                return createMarkers(result.val());
+                return result.val();
             });
         }
 
@@ -107,7 +107,7 @@
                 var player = players[i];
                 marker = new L.marker([0, 0], {
                     draggable: true,
-                    //icon: L.icon({ "iconSize": [70, 70], "iconUrl": player["icon"] })
+                    icon: L.icon({ "iconSize": [70, 70], "iconUrl": player["icon"] })
                 }).bindPopup(player["name"]);
                 markerArray.push(marker);
             }
@@ -115,23 +115,16 @@
         }
 
         function placeMarkersInMap(markers) {
-            console.log(markers)
             for (var i = 0; i < markers.length; i++) {
-                console.log(markers[i]);
                 map.addLayer(markers[i]);
             }
-            console.log("Finished...")
         }
 
         ; (async () => {
             const playerInfo = await getPlayerInfo();
             const markerArray = createMarkers(playerInfo)
-            console.log(markerArray);
-            console.log("Placing markers in map...")
             placeMarkersInMap(markerArray);
         })()
-
-
 
 
 
@@ -142,8 +135,7 @@
         //});
         //var custom_icon = L.icon({ "iconSize": [70, 70], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png" });
         //marker.setIcon(custom_icon);
-        ////
-//
+
         //// Listen for changes in firebase
         //firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players/' + '0').on('value', function (snapshot) {
         //    var val = snapshot.val();
