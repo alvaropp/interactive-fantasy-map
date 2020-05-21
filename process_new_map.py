@@ -65,5 +65,5 @@ def create_map_from_form(form):
 
     # Create map website
     map_website_path = os.path.join(map_UUID, map_name + ".html")
-    map_website_path = "Your map file is: " + map_website_path
+    map_website_path = "Your map file is: maps/" + map_website_path
     return map_website_path
