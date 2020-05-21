@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -12,4 +12,4 @@ class CreateMapForm(FlaskForm):
     char_icon_1 = StringField("Character 1 icon", validators=[DataRequired()])
     char_icon_2 = StringField("Character 2 icon", validators=[DataRequired()])
     char_icon_3 = StringField("Character 3 icon", validators=[DataRequired()])
-    create = SubmitField("Create!")
+    create = SubmitField("Create map!")

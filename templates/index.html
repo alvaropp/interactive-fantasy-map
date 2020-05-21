@@ -12,44 +12,31 @@
             {% block content %}
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
-                <p>
-                    {{ form.map_name.label }}<br>
-                    {{ form.map_name(size=32) }}
-                    {% for error in form.map_name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.map_base_url.label }}<br>
-                    {{ form.map_base_url(size=32) }}
-                    {% for error in form.map_base_url.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-
-
-
-
                 <table>
                     <tr>
                         <td></td>
                         <td>Name</td>
-                        <td>Icon URL</td>
+                        <td>URL</td>
+                    </tr>
+                    <tr>
+                        <td>Map</td>
+                        <td>{{ form.map_name(size=32) }}</td>
+                        <td>{{ form.map_base_url(size=70) }}</td>
                     </tr>
                     <tr>
                         <td>Character 1</td>
                         <td>{{ form.char_name_1(size=32) }}</td>
-                        <td>{{ form.char_icon_1(size=32) }}</td>
+                        <td>{{ form.char_icon_1(size=70) }}</td>
                     </tr>
                     <tr>
                         <td>Character 2</td>
                         <td>{{ form.char_name_2(size=32) }}</td>
-                        <td>{{ form.char_icon_2(size=32) }}</td>
+                        <td>{{ form.char_icon_2(size=70) }}</td>
                     </tr>
                     <tr>
                         <td>Character 3</td>
                         <td>{{ form.char_name_3(size=32) }}</td>
-                        <td>{{ form.char_icon_3(size=32) }}</td>
+                        <td>{{ form.char_icon_3(size=70) }}</td>
                     </tr>
                 </table>
 
