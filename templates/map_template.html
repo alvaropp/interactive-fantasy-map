@@ -3,8 +3,6 @@
 
 <head>
 
-    <title>My Map (todo)</title>
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -68,6 +66,7 @@
         // Get map UUID, name, etc.
         var mapUUID = {{ data| tojson }}[0];
         var mapName = {{ data| tojson }}[1];
+        document.title = mapName + " - Interactive fantasy maps";
 
         // Create map
         var map = L.map(
