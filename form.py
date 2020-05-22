@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import FieldList, Form, FormField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class CreateMapForm(FlaskForm):
+class CharacterForm(FlaskForm):
+    char_name = StringField("Character name")
+    char_url = StringField("Character icon URL")
+
+
+class MapForm(FlaskForm):
     map_name = StringField("Map name", validators=[DataRequired()])
     map_base_url = StringField("Map image URL", validators=[DataRequired()])
-    char_name_1 = StringField("Character 1 name", validators=[DataRequired()])
-    char_name_2 = StringField("Character 2 name", validators=[DataRequired()])
-    char_name_3 = StringField("Character 3 name", validators=[DataRequired()])
-    char_icon_1 = StringField("Character 1 icon", validators=[DataRequired()])
-    char_icon_2 = StringField("Character 2 icon", validators=[DataRequired()])
-    char_icon_3 = StringField("Character 3 icon", validators=[DataRequired()])
+    characters = FieldList(FormField(CharacterForm), min_entries=10)
     create = SubmitField("Create map!")

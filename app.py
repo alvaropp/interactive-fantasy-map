@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, redirect
-from form import CreateMapForm
+from form import MapForm
 from process_new_map import create_map_from_form
 
 
@@ -11,7 +11,7 @@ with open("secret.txt", "r") as secret_f:
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-    form = CreateMapForm()
+    form = MapForm()
     if form.validate_on_submit():
         text = create_map_from_form(form)
         flash(text)

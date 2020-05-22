@@ -4,42 +4,36 @@
 
 {% block body %}
 
-<h1>Welcome!</h1>
+<h2>Welcome!</h2>
 
 <div class="container">
     <div class="row">
         <div class="col-12">
             {% block content %}
-            <form action="" method="post" novalidate>
+
+            <form action="" method="post" role="form">
                 {{ form.hidden_tag() }}
                 <table>
                     <tr>
                         <td></td>
                         <td>Name</td>
-                        <td>URL</td>
+                        <td>Image URL</td>
                     </tr>
                     <tr>
                         <td>Map</td>
                         <td>{{ form.map_name(size=32) }}</td>
                         <td>{{ form.map_base_url(size=70) }}</td>
                     </tr>
+                    {% for l in form.characters %}
                     <tr>
-                        <td>Character 1</td>
-                        <td>{{ form.char_name_1(size=32) }}</td>
-                        <td>{{ form.char_icon_1(size=70) }}</td>
+                        <td>Character {{ loop.index }}</td>
+                        <td>{{ l.form.char_name(size=32) }}</td>
+                        <td>{{ l.form.char_url(size=70) }}</td>
                     </tr>
-                    <tr>
-                        <td>Character 2</td>
-                        <td>{{ form.char_name_2(size=32) }}</td>
-                        <td>{{ form.char_icon_2(size=70) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Character 3</td>
-                        <td>{{ form.char_name_3(size=32) }}</td>
-                        <td>{{ form.char_icon_3(size=70) }}</td>
-                    </tr>
+                    {{ char_name }}
+                    {% endfor %}
                 </table>
-
+                <br>
                 <p>{{ form.create() }}</p>
             </form>
             {% endblock %}
