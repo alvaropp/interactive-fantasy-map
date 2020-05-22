@@ -36,8 +36,8 @@ def create_tiles(map_UUID, map_name, map_extension, map_image_file):
 
 
 def get_characters(form):
-    char_names = [v for (k, v) in form.data.items() if "char_name" in k]
-    char_icon_urls = [v for (k, v) in form.data.items() if "char_icon" in k]
+    char_names = [char["char_name"] for char in form.data["characters"] if char["char_name"] != ""]
+    char_icon_urls = [char["char_url"] for char in form.data["characters"] if char["char_url"] != ""]
     return char_names, char_icon_urls
 
 

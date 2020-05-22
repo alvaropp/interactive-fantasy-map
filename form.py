@@ -3,7 +3,7 @@ from wtforms import FieldList, Form, FormField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class CharacterForm(FlaskForm):
+class CharacterForm(Form):
     char_name = StringField("Character name")
     char_url = StringField("Character icon URL")
 
