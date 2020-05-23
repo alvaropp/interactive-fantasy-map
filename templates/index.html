@@ -13,27 +13,32 @@
 
             <form action="" method="post" role="form">
                 {{ form.hidden_tag() }}
-                <table>
-                    <tr>
-                        <td></td>
-                        <td>Name</td>
-                        <td>Image URL</td>
-                    </tr>
-                    <tr>
-                        <td>Map</td>
-                        <td>{{ form.map_name(size=32) }}</td>
-                        <td>{{ form.map_base_url(size=70) }}</td>
-                    </tr>
-                    {% for l in form.characters %}
-                    <tr>
-                        <td>Character {{ loop.index }}</td>
-                        <td>{{ l.form.char_name(size=32) }}</td>
-                        <td>{{ l.form.char_url(size=70) }}</td>
-                    </tr>
-                    {{ char_name }}
-                    {% endfor %}
+
+                <table class="table-sm">
+
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image URL</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">Map</th>
+                            <td>{{ form.map_name(size=32) }}</td>
+                            <td>{{ form.map_base_url(size=70) }}</td>
+                        </tr>
+                        {% for l in form.characters %}
+                        <tr>
+                            <th scope="row">Character {{ loop.index }}</th>
+                            <td>{{ l.form.char_name(size=32) }}</td>
+                            <td>{{ l.form.char_url(size=70) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
-                <br>
                 <p>{{ form.create() }}</p>
             </form>
 
