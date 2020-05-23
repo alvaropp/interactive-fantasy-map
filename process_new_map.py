@@ -21,24 +21,28 @@ def download_map_base_image(map_UUID, map_name, map_extension, map_url):
 
 
 def create_tiles(map_UUID, map_name, map_extension, map_image_file):
+    tile_path = os.path.join(MAPS_PATH, map_UUID, 'tiles')
     subprocess.run(
-        ["echo", "Even more output"], stdout=subprocess.PIPE, universal_newlines=True
+        ["vips", "dzsave", "--layout", "google", map_image_file, tile_path,]
     )
-    subprocess.run(
+    # Count number of zooms available
+    number_zooms = len(
         [
-            "vips",
-            "dzsave",
-            "--layout",
-            "google",
-            f"{map_image_file}",
-            f"{os.path.join(MAPS_PATH, map_UUID, 'tiles')}",
+            name
+            for name in os.listdir(tile_path)
+            if os.path.isdir(os.path.join(tile_path, name))
         ]
     )
+    return number_zooms
 
 
 def get_characters(form):
-    char_names = [char["char_name"] for char in form.data["characters"] if char["char_name"] != ""]
-    char_icon_urls = [char["char_url"] for char in form.data["characters"] if char["char_url"] != ""]
+    char_names = [
+        char["char_name"] for char in form.data["characters"] if char["char_name"] != ""
+    ]
+    char_icon_urls = [
+        char["char_url"] for char in form.data["characters"] if char["char_url"] != ""
+    ]
     return char_names, char_icon_urls
 
 
@@ -58,7 +62,12 @@ def create_map_from_form(form):
     map_image_file = download_map_base_image(
         map_UUID, map_name, map_extension, map_base_url
     )
-    create_tiles(map_UUID, map_name, map_extension, map_image_file)
+    number_zooms = create_tiles(map_UUID, map_name, map_extension, map_image_file)
+
+    # Hardcode the number of available zooms in the UUID
+    map_image_path = map_image_file.rsplit("/", 1)[0]
+    os.rename(map_image_path, map_image_path+f"-{number_zooms}")
+    map_UUID += f"-{number_zooms}"
 
     # Update database
     db = connect_to_firebase_db()

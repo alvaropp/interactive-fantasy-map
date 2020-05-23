@@ -66,6 +66,8 @@
         // Get map UUID, name, etc.
         var mapUUID = {{ data| tojson }}[0];
         var mapName = {{ data| tojson }}[1];
+        var uuidArray = mapUUID.split("-");
+        var maxZoom = parseInt(uuidArray[uuidArray.length-1]) - 1;
         var mapNameEncoded = encodeURIComponent(mapName);
         document.title = mapName + " - Interactive fantasy maps";
 
@@ -86,8 +88,8 @@
             {
                 "attribution": "TO-DO",
                 "detectRetina": false,
-                "maxNativeZoom": 5,
-                "maxZoom": 5,
+                "maxNativeZoom": maxZoom,
+                "maxZoom": maxZoom,
                 "minZoom": 0,
                 "noWrap": false,
                 "opacity": 1,
@@ -95,6 +97,8 @@
                 "tms": false
             }
         ).addTo(map);
+
+        console.log(maxZoom);
 
         var markerLayer = L.layerGroup().addTo(map);
 
