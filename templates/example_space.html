@@ -45,7 +45,8 @@
                 {
                     center: [-60.0, 60.0],
                     crs: L.CRS.Simple,
-                    zoom: 2,
+                    zoom: 1,
+                    maxZoom: 6,
                     zoomControl: true,
                     preferCanvas: false,
                 }
@@ -57,7 +58,7 @@
     
             var tile_layer_6b93c63b2ff84388940f87cb5dbdd63c = L.tileLayer(
                 "https://github.com/alvaropp/fantasy-map-example/blob/master/space_example/tiles/{z}/{y}/{x}.png?raw= true",
-                {"attribution": "My Data Attribution", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+                {"attribution": "Created by TODO", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             ).addTo(map_dd7bb5fa4c5f493194a4b5b2b786e59a);
         
     
