@@ -23,7 +23,7 @@ def download_map_base_image(map_UUID, map_name, map_extension, map_url):
 def create_tiles(map_UUID, map_name, map_extension, map_image_file):
     tile_path = os.path.join(MAPS_PATH, map_UUID, 'tiles')
     subprocess.run(
-        ["vips", "dzsave", "--layout", "google", map_image_file, tile_path, "--suffix .png"]
+        ["vips", "dzsave", "--layout", "google", map_image_file, tile_path, "--suffix", ".png"]
     )
     # Delete base image
     os.remove(map_image_file)
