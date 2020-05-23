@@ -25,6 +25,8 @@ def create_tiles(map_UUID, map_name, map_extension, map_image_file):
     subprocess.run(
         ["vips", "dzsave", "--layout", "google", map_image_file, tile_path,]
     )
+    # Delete base image
+    os.remove(map_image_file)
     # Count number of zooms available
     number_zooms = len(
         [
