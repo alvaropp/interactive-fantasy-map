@@ -66,6 +66,7 @@
         // Get map UUID, name, etc.
         var mapUUID = {{ data| tojson }}[0];
         var mapName = {{ data| tojson }}[1];
+        var mapNameEncoded = encodeURIComponent(mapName);
         document.title = mapName + " - Interactive fantasy maps";
 
         // Create map
@@ -107,7 +108,7 @@
                 }).bindPopup(player["name"]);
                 marker.on("dragend", function (e) {
                     var chagedPos = e.target.getLatLng();
-                    writePositionData(mapUUID, mapName, i, chagedPos.lat, chagedPos.lng);
+                    writePositionData(mapUUID, mapNameEncoded, i, chagedPos.lat, chagedPos.lng);
                 });
                 markerArray.push(marker);
             }
@@ -121,7 +122,7 @@
         }
 
         // Listen for changes in firebase
-        firebase.database().ref('maps/' + mapUUID + "/" + mapName + '/players').on('value', function (snapshot) {
+        firebase.database().ref('maps/' + mapUUID + "/" + mapNameEncoded + '/players').on('value', function (snapshot) {
             var playerInfo = snapshot.val();
             markerLayer.clearLayers();
             markerArray = createMarkers(playerInfo)

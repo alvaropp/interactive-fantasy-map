@@ -5,6 +5,7 @@ import urllib.request
 import uuid
 from pathlib import Path
 from shutil import copyfile
+from urllib.parse import quote
 
 from firebase_db import connect_to_firebase_db, write_to_db
 
@@ -36,8 +37,8 @@ def create_tiles(map_UUID, map_name, map_extension, map_image_file):
 
 
 def get_characters(form):
-    char_names = [v for (k, v) in form.data.items() if "char_name" in k]
-    char_icon_urls = [v for (k, v) in form.data.items() if "char_icon" in k]
+    char_names = [char["char_name"] for char in form.data["characters"] if char["char_name"] != ""]
+    char_icon_urls = [char["char_url"] for char in form.data["characters"] if char["char_url"] != ""]
     return char_names, char_icon_urls
 
 
@@ -46,7 +47,7 @@ def create_map_from_form(form):
     map_UUID = str(uuid.uuid4())
 
     # Grab map info
-    map_name = form.map_name.data
+    map_name = quote(form.map_name.data)
     map_base_url = form.map_base_url.data
     map_extension = map_base_url.split(".")[-1]
 

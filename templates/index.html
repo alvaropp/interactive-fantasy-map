@@ -4,45 +4,57 @@
 
 {% block body %}
 
-<h1>Welcome!</h1>
+<h2>Welcome!</h2>
 
 <div class="container">
     <div class="row">
         <div class="col-12">
             {% block content %}
-            <form action="" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <table>
-                    <tr>
-                        <td></td>
-                        <td>Name</td>
-                        <td>URL</td>
-                    </tr>
-                    <tr>
-                        <td>Map</td>
-                        <td>{{ form.map_name(size=32) }}</td>
-                        <td>{{ form.map_base_url(size=70) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Character 1</td>
-                        <td>{{ form.char_name_1(size=32) }}</td>
-                        <td>{{ form.char_icon_1(size=70) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Character 2</td>
-                        <td>{{ form.char_name_2(size=32) }}</td>
-                        <td>{{ form.char_icon_2(size=70) }}</td>
-                    </tr>
-                    <tr>
-                        <td>Character 3</td>
-                        <td>{{ form.char_name_3(size=32) }}</td>
-                        <td>{{ form.char_icon_3(size=70) }}</td>
-                    </tr>
-                </table>
 
+            <!-- Display all form errors -->
+            {% if form.errors %}
+            <ul class="errors">
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors if error%}
+                <li>{{ form[field_name].label }}: <strong>{{ error }}</strong></li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endblock %}
+
+            <!-- Form itself -->
+            <form action="" method="post" role="form" novalidate>
+                {{ form.hidden_tag() }}
+
+                <table class="table-sm">
+
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image URL</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">Map</th>
+                            <td>{{ form.map_name(size=32) }}</td>
+                            <td>{{ form.map_base_url(size=70) }}</td>
+                        </tr>
+                        {% for l in form.characters %}
+                        <tr>
+                            <th scope="row">Character {{ loop.index }}</th>
+                            <td>{{ l.form.char_name(size=32) }}</td>
+                            <td>{{ l.form.char_url(size=70) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 <p>{{ form.create() }}</p>
             </form>
-            {% endblock %}
+
         </div>
     </div>
 </div>
