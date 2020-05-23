@@ -1,3 +1,5 @@
+from glob import glob
+
 from flask import flash, Flask, Markup, render_template, redirect, request, send_from_directory
 from form import MapForm
 from process_new_map import create_map_from_form
@@ -23,7 +25,8 @@ def home():
 
 @app.route("/examples", methods=["GET", "POST"])
 def examples():
-    return render_template("examples.html")
+    examples = [path.split("/")[-1].split("_")[-1].split(".")[0] for path in glob("templates/example_*")]
+    return render_template("examples.html", examples=examples)
 
 
 @app.route("/help", methods=["GET", "POST"])

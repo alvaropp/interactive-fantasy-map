@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fade1d41ddc14be1ad692e23e4cb0d58 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_fade1d41ddc14be1ad692e23e4cb0d58" ></div>
+        
+</body>
+<script>    
+    
+            var map_fade1d41ddc14be1ad692e23e4cb0d58 = L.map(
+                "map_fade1d41ddc14be1ad692e23e4cb0d58",
+                {
+                    center: [-50.0, 50.0],
+                    crs: L.CRS.Simple,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c587f3adff004ef99517d575ff44ed60 = L.tileLayer(
+                "https://github.com/alvaropp/fantasy-map-example/blob/master/dungeon_example/tiles/{z}/{y}/{x}.png?raw= true",
+                {"attribution": "Created with interactive-fantasy-map. Map created with \u003ca href=\"https://donjon.bin.sh/fantasy/dungeon/\"\u003edonjon\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 4, "maxZoom": 4, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_fade1d41ddc14be1ad692e23e4cb0d58);
+        
+    
+            var marker_fa5f5cc4013e4b618dc599b51750b8d7 = L.marker(
+                [-43.0, 40.0],
+                {"autoPan": true, "draggable": true}
+            ).addTo(map_fade1d41ddc14be1ad692e23e4cb0d58);
+        
+    
+        var custom_icon_4478d334ec5f4a58ad479865815e94ad = L.icon({"iconSize": [60, 60], "iconUrl": "https://img.icons8.com/emoji/96/000000/mage-emoji.png"});
+        marker_fa5f5cc4013e4b618dc599b51750b8d7.setIcon(custom_icon_4478d334ec5f4a58ad479865815e94ad);
+        
+    
+        var popup_fbdc9a3f86734551ad9c4a97f742d418 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_57cde5d48e7744e1bd797c98530674de = $(`<div id="html_57cde5d48e7744e1bd797c98530674de" style="width: 100.0%; height: 100.0%;">Character 1</div>`)[0];
+            popup_fbdc9a3f86734551ad9c4a97f742d418.setContent(html_57cde5d48e7744e1bd797c98530674de);
+        
+
+        marker_fa5f5cc4013e4b618dc599b51750b8d7.bindPopup(popup_fbdc9a3f86734551ad9c4a97f742d418)
+        ;
+
+        
+    
+    
+            var marker_607d0c599b27451195e017e3a1c35d9d = L.marker(
+                [-60.0, 70.0],
+                {"autoPan": true, "draggable": true}
+            ).addTo(map_fade1d41ddc14be1ad692e23e4cb0d58);
+        
+    
+        var custom_icon_cb11865c7a984e2b8f824a3b423bb5cc = L.icon({"iconSize": [60, 60], "iconUrl": "https://img.icons8.com/color/96/000000/orc.png"});
+        marker_607d0c599b27451195e017e3a1c35d9d.setIcon(custom_icon_cb11865c7a984e2b8f824a3b423bb5cc);
+        
+    
+        var popup_bb2b304827c844d8933bf046d4732422 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_a340fbd783f641c98f9422597208dd53 = $(`<div id="html_a340fbd783f641c98f9422597208dd53" style="width: 100.0%; height: 100.0%;">Character 2</div>`)[0];
+            popup_bb2b304827c844d8933bf046d4732422.setContent(html_a340fbd783f641c98f9422597208dd53);
+        
+
+        marker_607d0c599b27451195e017e3a1c35d9d.bindPopup(popup_bb2b304827c844d8933bf046d4732422)
+        ;
+
+        
+    
+</script>
