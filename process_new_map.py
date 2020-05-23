@@ -5,6 +5,7 @@ import urllib.request
 import uuid
 from pathlib import Path
 from shutil import copyfile
+from urllib.parse import quote
 
 from firebase_db import connect_to_firebase_db, write_to_db
 
@@ -46,7 +47,7 @@ def create_map_from_form(form):
     map_UUID = str(uuid.uuid4())
 
     # Grab map info
-    map_name = form.map_name.data
+    map_name = quote(form.map_name.data)
     map_base_url = form.map_base_url.data
     map_extension = map_base_url.split(".")[-1]
 
