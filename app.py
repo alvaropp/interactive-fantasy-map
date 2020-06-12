@@ -31,7 +31,7 @@ def examples():
 
 @app.route("/help", methods=["GET", "POST"])
 def help():
-    return "Yeah help..."
+    return render_template("help.html")
 
 
 @app.route("/maps/<map_uuid>/<map_name>.html")
